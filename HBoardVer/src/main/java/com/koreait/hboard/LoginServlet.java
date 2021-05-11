@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet("/login")
@@ -36,6 +37,8 @@ public class LoginServlet extends HttpServlet {
 			out.close();			
 					
 		} else {
+			HttpSession hs = request.getSession();
+			hs.setAttribute("loginSuccess", true);
 			response.sendRedirect("/list");
 		}
 	}

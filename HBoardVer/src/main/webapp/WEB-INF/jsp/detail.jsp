@@ -19,24 +19,26 @@
 <body>
 	<h1>디테일</h1>
 	<a href="/list">리스트</a>
-	<div>
-		제목 : ${data.title }
-	</div>
-	<div>
-		내용 : ${data.ctnt }
-	</div>
-	<div>
-		작성일 : ${data.regdt }
-	</div>
-	<div>
-		조회수 : ${data.boardcount }
-	</div>
-	<a href="/mod?iboard=${param.iboard }"><Button>수정하기</Button></a>
-	<a href="/del?iboard=${param.iboard }"><Button>삭제하기</Button></a>
-	
 	<table>
 		<tr>
-			<th colspan="2">댓글창</th>
+			<td>제목</td>
+			<td>${data.title }</td>
+			<td>작성일</td>
+			<td> ${data.regdt }</td>
+			<td>조회수</td>
+			<td>${data.boardcount }</td>
+		</tr>
+		<tr>
+			<td colspan=6>${data.ctnt }</td>
+		</tr>
+		<tr>	
+			<td><a href="/mod?iboard=${param.iboard }"><Button>수정하기</Button></a></td>
+			<td><a href="/del?iboard=${param.iboard }"><Button>삭제하기</Button></a></td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<th colspan=2>댓글창</th>
 		</tr>
 		<c:forEach items="${clist}" var="coml">
 		<tr>

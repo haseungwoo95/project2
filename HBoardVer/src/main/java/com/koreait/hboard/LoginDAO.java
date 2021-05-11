@@ -38,8 +38,7 @@ public class LoginDAO {
 			ps.setString(2, lo.getPw());
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				log.setId(rs.getString("id"));
-				log.setPw(rs.getString("pw"));			
+				log.setId(rs.getString("id"));			
 				return log;
 			}
 		} catch (Exception e) {
