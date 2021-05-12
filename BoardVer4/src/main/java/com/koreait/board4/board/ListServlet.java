@@ -18,7 +18,7 @@ public class ListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
-		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
+		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");//로그아웃 상태면 로그인 페이지로
 		if(loginUser == null) {
 			response.sendRedirect("/user/login");
 			return;
