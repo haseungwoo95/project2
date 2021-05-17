@@ -20,15 +20,13 @@ public class ListBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
-		
+		if(loginUser == null) {
+			response.sendRedirect("/user/userLogin");
+			return;
+		}
 		List<BoardVO> list = BoardDAO.selBoardList();
 		request.setAttribute("list", list);
 		
 		MyUtils.openJSP("board/list", request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 }

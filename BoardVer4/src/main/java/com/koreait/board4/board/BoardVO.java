@@ -7,7 +7,7 @@ public class BoardVO {
 	private int iuser;
 	private String regdt;
 	private String unm;
-	
+
 	public int getIboard() {
 		return iboard;
 	}
@@ -44,5 +44,4 @@ public class BoardVO {
 	public void setUnm(String unm) {
 		this.unm = unm;
 	}
-	
 }

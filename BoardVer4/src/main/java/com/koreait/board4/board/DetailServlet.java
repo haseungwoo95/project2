@@ -1,6 +1,8 @@
 package com.koreait.board4.board;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +22,29 @@ public class DetailServlet extends HttpServlet {
 		int iboard = MyUtils.getParamInt("iboard", request);
 		BoardVO data = BoardDAO.selBoard(iboard);
 		request.setAttribute("data", data);
+		
+		//List<BoardVO> commList = BoardDAO.selCommList(iboard);
+		//request.setAttribute("commList", commList);
+		
 		MyUtils.openJSP("board/detail", request, response);
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String comm = request.getParameter("comm");
+		int iboard = MyUtils.getParamInt("iboard", request);
+		//int iuser = MyUtils.getLoginUserPk(request);
+		UserVO loginUser = MyUtils.getLoginUser(request);
+		
+		BoardVO vo = new BoardVO();
+		//vo.setComm(comm);
+		vo.setIboard(iboard);
+		vo.setUnm(loginUser.getUnm());
+		vo.setIuser(loginUser.getIuser());
+		
+		//BoardDAO.insertComm(vo);
+		
+		response.sendRedirect("detail?iboard=" + iboard);
 	}
 
 }

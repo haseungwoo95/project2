@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
+<style>
+	 table, th, td {
+		border : 1px solid black;
+		border-collapse : collapse;		
+	}
+</style>
 </head>
 <body>
 	<div>로그인 성공</div>

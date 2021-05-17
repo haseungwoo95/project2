@@ -194,7 +194,7 @@ public class BoardDOA {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM t_board WHERE title LIKE ?";
+		String sql = "SELECT * FROM t_board WHERE title LIKE ? ORDER BY iboard DESC";
 		try {
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sql);

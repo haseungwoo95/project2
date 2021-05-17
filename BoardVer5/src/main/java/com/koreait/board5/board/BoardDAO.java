@@ -79,7 +79,7 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT A.iboard, A.title, B.unm, A.regdt FROM t_board A LEFT JOIN t_user B ON A.iuser = B.iuser ORDER BY iboard DESC";
+		String sql = "SELECT A.iboard, A.title, B.unm, A.regdt, A.iuser FROM t_board A LEFT JOIN t_user B ON A.iuser = B.iuser ORDER BY iboard DESC";
 		
 		try {
 			con = DBUtils.getCon();
@@ -88,6 +88,7 @@ public class BoardDAO {
 			
 			while(rs.next()) {
 				BoardVO vo = new BoardVO();
+				vo.setIuser(rs.getInt("iuser"));
 				vo.setIboard(rs.getInt("iboard"));
 				vo.setTitle(rs.getString("title"));
 				vo.setUnm(rs.getString("unm"));

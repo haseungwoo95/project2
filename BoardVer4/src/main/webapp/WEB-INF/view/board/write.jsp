@@ -9,6 +9,9 @@
 <body>
 	<h1>글쓰기</h1>
 	<div>
+		<a href="list">돌아가기</a>
+	</div>
+	<div>
 		<form action="write" method="post">
 			<div><input type="text" name="title" placeholder="제목"></div>
 			<div><textarea name="ctnt"></textarea></div>
