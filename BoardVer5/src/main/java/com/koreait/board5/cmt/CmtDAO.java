@@ -6,6 +6,25 @@ import java.util.*;
 import com.koreait.board5.DBUtils;
 
 public class CmtDAO {
+	public static void updCmt(CmtVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "UPDATE t_board_cmt SET cmt = ? WHERE icmt = ? AND iuser = ?";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, vo.getCmt());
+			ps.setInt(2, vo.getIcmt());
+			ps.setInt(3, vo.getIuser());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	} 
 	public static void delCmt(CmtVO vo) {
 		Connection con = null;
 		PreparedStatement ps = null;

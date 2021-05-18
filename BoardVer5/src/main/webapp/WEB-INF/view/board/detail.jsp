@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>${vo.title }</title>
+<style>
+	.hidden{
+		display: none;
+	}
+</style>
 <script defer src="/res/js/boardDetail.js"></script>
 </head>
 <body>
@@ -19,13 +24,27 @@
 	</c:if>
 	<div>제목 : ${vo.title }</div>
 	<div>${vo.ctnt }</div>
+	<div><a href="like?iboard=${vo.iboard }"><button>좋아요</button></a> 좋아요 수 : ${cnt }</div>
 	<h3>댓글</h3>
 	<div>
-		<form action="cmt" method="post">
-			<input type="hidden" name="iboard"	value="${vo.iboard }">
+		<!-- 댓글 작성 -->
+		<form id="insFrm" action="cmt" method="post">
+		<input type="hidden" name="icmt" value="0">
+			<input type="hidden" name="iboard" value="${vo.iboard }">
 			<div>
 				<textarea name="cmt" placeholder="댓글내용"></textarea>
 				<input type="submit" value="댓글작성">
+			</div>
+		</form>
+		
+		<!-- 댓글 수정 -->
+		<form id="updFrm" action="cmt" method="post" class="hidden">
+			<input type="hidden" name="icmt" value="0">
+			<input type="hidden" name="iboard" value="${vo.iboard }">
+			<div>
+				<textarea name="cmt" placeholder="댓글내용"></textarea>
+				<input type="submit" value="댓글수정">
+				<input type="button" value="수정취소" onclick="showInsFrm();">
 			</div>
 		</form>
 	</div>
@@ -44,11 +63,7 @@
 					<td>${item.regdate }</td>
 					<td>
 					<c:if test="${loginUser.iuser == item.iuser }">
-						<button>수정</button>
-					</c:if>
-					</td>
-					<td>
-					<c:if test="${loginUser.iuser == item.iuser || loginUser.iuser == vo.iuser}">
+						<button onclick="updCmt(${item.icmt}, '${item.cmt.trim()}');">수정</button>
 						<button onclick="delCmt(${vo.iboard}, ${item.icmt });">삭제</button>
 					</c:if>
 					</td>

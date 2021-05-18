@@ -29,14 +29,19 @@ public class CmtServlet extends HttpServlet {
 		String cmt = request.getParameter("cmt");
 		int iboard = MyUtils.getParamInt("iboard", request);
 		int iuser = MyUtils.getLoginUserPk(request);
-		
+		int icmt = MyUtils.getParamInt("icmt", request);
 		CmtVO vo = new CmtVO();
 		vo.setCmt(cmt);
-		vo.setIboard(iboard);
 		vo.setIuser(iuser);
 		
-		CmtDAO.insCmt(vo);
-		
+		if(icmt != 0) {//수정
+			vo.setIcmt(icmt);
+			CmtDAO.updCmt(vo);
+		} else {//등록
+			vo.setIboard(iboard);
+			CmtDAO.insCmt(vo);
+		}
+			
 		response.sendRedirect("detail?iboard=" + iboard);
 	}
 }

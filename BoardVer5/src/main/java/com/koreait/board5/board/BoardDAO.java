@@ -6,6 +6,91 @@ import java.util.*;
 import com.koreait.board5.DBUtils;
 
 public class BoardDAO {
+	public static int cntLike(int iboard) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int sum = 0;
+		String sql = "SELECT * FROM t_board_like WHERE iboard = ?";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, iboard);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				sum = sum + 1;
+			}
+			return sum;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
+	
+	public static void delBoardLike(BoardVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "DELETE FROM t_board_like WHERE iboard = ? AND iuser = ?";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getIboard());
+			ps.setInt(2, vo.getIuser());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
+	
+	public static int searchLike(BoardVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM t_board_like WHERE iboard = ? AND iuser = ?";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getIboard());
+			ps.setInt(2, vo.getIuser());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return 1;
+			} else {
+				return 0;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.close(con, ps, rs);
+		}
+	}
+	
+	public static void boardLike(BoardVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = "INSERT INTO t_board_like (iboard, iuser) VALUES (?,?)";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getIboard());
+			ps.setInt(2, vo.getIuser());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
 	public static int modBoard(BoardVO vo) {
 		Connection con = null;
 		PreparedStatement ps = null;

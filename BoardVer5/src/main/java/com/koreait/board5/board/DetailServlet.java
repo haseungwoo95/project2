@@ -19,8 +19,8 @@ public class DetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserVO vo2 = MyUtils.getLoginUser(request);
-		if(vo2 == null) {
+		UserVO uvo = MyUtils.getLoginUser(request);
+		if(uvo == null) {
 			response.sendRedirect("/user/userLogin");
 			return;
 		}
@@ -29,11 +29,14 @@ public class DetailServlet extends HttpServlet {
 		
 		request.setAttribute("vo", vo);
 		
-		CmtVO cmt = new CmtVO();
-		cmt.setIboard(iboard);
+		CmtVO cvo = new CmtVO();
+		cvo.setIboard(iboard);
 		
-		List<CmtVO> list = CmtDAO.selCmtList(cmt);
+		List<CmtVO> list = CmtDAO.selCmtList(cvo);
 		request.setAttribute("cmtList", list);
+		
+		int a = BoardDAO.cntLike(iboard);
+		request.setAttribute("cnt", a);
 		
 		MyUtils.openJSP("board/detail", request, response);
 	}
