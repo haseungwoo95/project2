@@ -16,16 +16,24 @@ import com.koreait.board5.user.UserVO;
 @WebServlet("/board/list")
 public class ListBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-           
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
 		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
-		if(loginUser == null) {
+		if (loginUser == null) {
 			response.sendRedirect("/user/userLogin");
 			return;
 		}
-		List<BoardVO> list = BoardDAO.selBoardList();
-		request.setAttribute("list", list);
+		String title = request.getParameter("search");
+		int chksearch = MyUtils.getParamInt("chksearch", request);
+		
+		if (chksearch == 1) {
+			List<BoardVO> list = BoardDAO.searchBoard(title);
+			request.setAttribute("list", list);
+		} else {
+			List<BoardVO> list = BoardDAO.selBoardList();
+			request.setAttribute("list", list);
+		}
 		
 		MyUtils.openJSP("board/list", request, response);
 	}

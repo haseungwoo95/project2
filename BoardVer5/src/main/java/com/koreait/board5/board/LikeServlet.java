@@ -21,12 +21,14 @@ public class LikeServlet extends HttpServlet {
 		BoardVO vo = new BoardVO();
 		vo.setIboard(iboard);
 		vo.setIuser(iuser);
-		int i = BoardDAO.searchLike(vo);
+		
+		int i = BoardDAO.chkLike(vo);
 		if(i == 1) {
 			BoardDAO.delBoardLike(vo);
 		} else {
 			BoardDAO.boardLike(vo);
 		}
+		
 		response.sendRedirect("detail?iboard="+iboard);
 	}
 

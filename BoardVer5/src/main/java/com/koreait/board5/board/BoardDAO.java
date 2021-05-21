@@ -6,6 +6,37 @@ import java.util.*;
 import com.koreait.board5.DBUtils;
 
 public class BoardDAO {
+	public static List<BoardVO> searchBoard(String title) {
+		List<BoardVO> list = new ArrayList();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT A.iboard, A.title, B.unm, A.regdt, A.iuser FROM t_board A LEFT JOIN t_user B ON A.iuser = B.iuser WHERE title LIKE ? ORDER BY iboard DESC";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%" + title + "%");
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setIboard(rs.getInt("iboard"));
+				vo.setTitle(rs.getString("title"));
+				vo.setUnm(rs.getString("unm"));
+				vo.setRegdt(rs.getString("regdt"));
+				
+				list.add(vo);
+			}
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			DBUtils.close(con, ps, rs);
+		}
+	}
 	public static int cntLike(int iboard) {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -48,7 +79,7 @@ public class BoardDAO {
 		}
 	}
 	
-	public static int searchLike(BoardVO vo) {
+	public static int chkLike(BoardVO vo) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -134,7 +165,11 @@ public class BoardDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "SELECT A.iboard, A.title, B.unm, A.regdt, A.ctnt, A.iuser FROM t_board A LEFT JOIN t_user B ON A.iuser = B.iuser WHERE iboard = ?";
+		String sql = "SELECT A.iboard, A.title, B.unm, A.regdt, A.ctnt, A.iuser "
+				+ " FROM t_board A "
+				+ " INNER JOIN t_user B "
+				+ " ON A.iuser = B.iuser "
+				+ " WHERE iboard = ? ";
 		
 		try {
 			con = DBUtils.getCon();

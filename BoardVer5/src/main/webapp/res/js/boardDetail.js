@@ -21,4 +21,3 @@ function showInsFrm() {
 	insFrm.className = '';
 	updFrm.className = 'hidden';
 }
-

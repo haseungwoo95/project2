@@ -13,6 +13,7 @@
 	<h1>리스트 페이지</h1>
 	<div>${sessionScope.loginUser.unm } (${sessionScope.loginUser.uid })님 환영합니다. <a href="/user/logout"><button>Logout</button></a></div>
 	<div><a href="write">글쓰기</a></div>
+	<div><input type="text" name="search" id="search"><input type="button" value="검색하기" onclick="searchToList()"></div>
 	<table>
 		<tr>
 			<th>게시글 번호</th>

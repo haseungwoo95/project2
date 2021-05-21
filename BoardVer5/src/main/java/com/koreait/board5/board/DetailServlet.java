@@ -25,6 +25,7 @@ public class DetailServlet extends HttpServlet {
 			return;
 		}
 		int iboard = MyUtils.getParamInt("iboard", request);
+		int iuser = MyUtils.getLoginUserPk(request);
 		BoardVO vo = BoardDAO.selBoard(iboard);
 		
 		request.setAttribute("vo", vo);
@@ -38,6 +39,9 @@ public class DetailServlet extends HttpServlet {
 		int a = BoardDAO.cntLike(iboard);
 		request.setAttribute("cnt", a);
 		
+		vo.setIuser(iuser);
+		int i = BoardDAO.chkLike(vo);
+		request.setAttribute("chk", i);
 		MyUtils.openJSP("board/detail", request, response);
 	}
 

@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>${vo.title }</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-	.hidden{
-		display: none;
-	}
+	.hidden{display: none;}
+	.fa-heart{color: red;}
 </style>
 <script defer src="/res/js/boardDetail.js"></script>
 </head>
@@ -22,9 +22,15 @@
 		<a href="mod?iboard=${vo.iboard }">수정</a>
 		<a href="del?iboard=${vo.iboard }">삭제</a>
 	</c:if>
-	<div>제목 : ${vo.title }</div>
+	<div>제목 : ${vo.title } </div>
 	<div>${vo.ctnt }</div>
-	<div><a href="like?iboard=${vo.iboard }"><button>좋아요</button></a> 좋아요 수 : ${cnt }</div>
+	<c:if test="${chk == 0 }">
+	<a href="like?iboard=${vo.iboard }"><i class="far fa-heart"></i></a>
+	</c:if>
+	<c:if test="${chk == 1 }"> 
+	<a href="like?iboard=${vo.iboard }"><i class="fas fa-heart"></i></a>
+	</c:if>
+	 ${cnt }명이 좋아요
 	<h3>댓글</h3>
 	<div>
 		<!-- 댓글 작성 -->
