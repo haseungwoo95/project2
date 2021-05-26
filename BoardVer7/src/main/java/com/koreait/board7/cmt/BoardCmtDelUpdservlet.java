@@ -1,4 +1,4 @@
-package com.koreait.board7.board;
+package com.koreait.board7.cmt;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,22 +9,30 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.koreait.board7.MyUtils;
 
-@WebServlet("/board/detail")
-public class BoardDetailServlet extends HttpServlet {
+@WebServlet("/board/cmtDelUpd")
+public class BoardCmtDelUpdservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+  
+	//댓글 삭제
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int icmt = MyUtils.getParamInt("icmt", request);
+		int iuser = MyUtils.getLoginUserPk(request);
 		
-		int iboard = MyUtils.getParamInt("iboard", request);
+		BoardCmtEntity param = new BoardCmtEntity();
+		param.setIcmt(icmt);
+		param.setIuser(iuser);
 		
-		BoardDTO param = new BoardDTO();
-		param.setIboard(iboard);
+		int result = BoardCmtDAO.delBoardCmt(param);
 		
-		request.setAttribute("data", BoardDAO.selBoard(param));
-		
-		MyUtils.openJSP("디테일", "board/boardDetail", request, response);
+		response.getWriter()
+		.append("{")
+		.append("\"result\":")
+		.append(String.valueOf(result))
+		.append("}")
+		.flush();
 	}
-
+	
+	//댓글 수정
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}

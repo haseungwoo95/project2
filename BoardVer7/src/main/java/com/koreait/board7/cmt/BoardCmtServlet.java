@@ -25,22 +25,23 @@ public class BoardCmtServlet extends HttpServlet {
 		
 		List<BoardCmtDomain> list = BoardCmtDAO.selBoardCmtList(param);
 		
-		String json = "[";
-		for(int i=0; i<list.size(); i++) {
-			String item = "{";
-			BoardCmtDomain vo = list.get(i);
-			item += "\"icmt\":";
-			item += vo.getIcmt();
-			item += "\"iboard\":";
-			item += vo.getIboard();
-			item += "}";
-			json += item;
-		}
-//		Gson gson = new Gson();
-//		String json = gson.toJson(list);
-//		
-//		response.getWriter()
-//		.append(json);
+//		String json = "[";
+//		for(int i=0; i<list.size(); i++) {
+//			String item = "{";
+//			BoardCmtDomain vo = list.get(i);
+//			item += "\"icmt\":";
+//			item += vo.getIcmt();
+//			item += "\"iboard\":";
+//			item += vo.getIboard();
+//			item += "}";
+//			json += item;
+//		}
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter()
+		.append(json);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
