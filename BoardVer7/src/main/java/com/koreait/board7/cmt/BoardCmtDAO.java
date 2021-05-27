@@ -6,6 +6,32 @@ import java.util.*;
 import com.koreait.board7.DBUtils;
 
 public class BoardCmtDAO {
+	public static int updBoardCmt(BoardCmtEntity param) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " UPDATE t_board_cmt "
+				+ " SET cmt = ? "
+				+ " WHERE iuser = ? AND icmt = ? ";
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setString(1, param.getCmt());
+			ps.setInt(2, param.getIuser());
+			ps.setInt(3, param.getIcmt());
+			ps.executeUpdate();
+			
+			result = 1;
+			
+			return result;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result;
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
 	public static int delBoardCmt(BoardCmtEntity param) {
 		int result = 0;
 		Connection con = null;
@@ -18,6 +44,8 @@ public class BoardCmtDAO {
 			ps.setInt(1, param.getIcmt());
 			ps.setInt(2, param.getIuser());
 			result = ps.executeUpdate();
+			
+			return result;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -25,7 +53,6 @@ public class BoardCmtDAO {
 		} finally {
 			DBUtils.close(con, ps);
 		}
-		return result;
 	}
 	public static List<BoardCmtDomain> selBoardCmtList(BoardCmtEntity param){
 		List<BoardCmtDomain> list = new ArrayList();

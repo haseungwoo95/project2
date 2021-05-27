@@ -1,5 +1,7 @@
 var cmtFrmElem = document.querySelector('#cmtFrm');
 var cmtListElem = document.querySelector('#cmtList');
+var cmtModModalElem = document.querySelector('#modal');
+var cmtModFrmElem = document.querySelector('#cmtModFrm');
 
 function regCmt() {
 	var cmtVal = cmtFrmElem.cmt.value;
@@ -88,12 +90,16 @@ function makeCmtElemList(data) {
 			var delBtn = document.createElement('button');
 			var modBtn = document.createElement('button');
 			
+			//삭제
 			delBtn.addEventListener('click', function(){
-				delAjax(item.icmt);
+				if(confirm('삭제하시겠습니까?')){
+					delAjax(item.icmt);
+				}
 			});
-			
+			//수정
 			modBtn.addEventListener('click', function(){
-				
+				//댓글 수정 모달창 띄우기
+				openModModal(item);
 			});
 			
 			delBtn.innerText = '삭제';
@@ -131,8 +137,11 @@ function delAjax(icmt){
 		}
 	});
 }
-
-function modAjax(/*수정한거 넣을꺼*/) {
+function modAjax(){
+	var param = {
+		icmt: cmtModFrmElem.icmt.value,
+		cmt: cmtModFrmElem.cmt.value
+	}
 	const init = {
 		method: 'POST',
 		body: new URLSearchParams(param)
@@ -150,10 +159,22 @@ function modAjax(/*수정한거 넣을꺼*/) {
 				case 1:
 					cmtFrmElem.cmt.value='';
 					alert('댓글 수정 완료!');
+					closeModModal();
 					getListAjax();
 				break;
 			}
-		})	
+		});	
 }
+function openModModal({icmt, cmt}){
+	cmtModModalElem.className = '';
+	
+	cmtModFrmElem.icmt.value = icmt;
+	cmtModFrmElem.cmt.value = cmt;
+}
+
+function closeModModal(){
+	cmtModModalElem.className = 'displayNone';
+}
+
 //이 파일이 임포트되면 함수 1회 호출
 getListAjax();

@@ -12,7 +12,7 @@ public class UserDAO {
 		
 		UserEntity result = null;
 		
-		String sql = "SELECT iuser, uid, upw, unm FROM t_user WHERE uid = ?";
+		String sql = "SELECT iuser, uid, upw, unm, profileImg FROM t_user WHERE uid = ?";
 		
 		try {
 			con = DBUtils.getCon();
@@ -29,6 +29,7 @@ public class UserDAO {
 				result.setUid(uid);
 				result.setUpw(upw);
 				result.setUnm(unm);
+			    result.setProfileImg(rs.getString("profileImg"));
 			}
 			return result;
 		} catch (Exception e) {

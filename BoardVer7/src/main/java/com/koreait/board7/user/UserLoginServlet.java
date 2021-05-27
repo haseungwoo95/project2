@@ -41,6 +41,7 @@ public class UserLoginServlet extends HttpServlet {
 		} else if (BCrypt.checkpw(upw, userL.getUpw())) {
 			// 아이디 있음 & 비밀번호 체크
 			userL.setUpw(null);
+			userL.setProfileImg(null);
 			HttpSession hs = request.getSession();
 			hs.setAttribute("loginUser", userL);
 			
