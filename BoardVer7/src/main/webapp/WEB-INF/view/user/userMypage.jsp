@@ -4,10 +4,10 @@
 <link rel="stylesheet" href="/res/css/userMypage.css">
 <c:choose>
 	<c:when test="${empty sessionScope.loginUser.profileImg }">
-		<c:set var="img" value="/res/img/user/${sessionScope.loginUser.iuser }/${sessionScope.loginUser.profileImg }"/>
+		<c:set var="img" value="/res/img/hu.jpg"/>
 	</c:when>
 	<c:otherwise>
-		<c:set var="img" value="${sessionScope.loginUser.profileImg }"/>
+		<c:set var="img" value="/res/img/user/${sessionScope.loginUser.iuser }/${sessionScope.loginUser.profileImg }"/>
 	</c:otherwise>
 </c:choose>
 <div>
